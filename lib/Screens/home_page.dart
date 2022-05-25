@@ -7,6 +7,8 @@ import 'package:product_inventory/Screens/add_item.dart';
 import 'package:product_inventory/Screens/add_remainder.dart';
 import 'package:product_inventory/Screens/add_remainder_item.dart';
 import 'package:product_inventory/Screens/faq.dart';
+import 'package:product_inventory/Screens/view_group.dart';
+import 'package:product_inventory/Screens/view_item.dart';
 import 'package:product_inventory/Utils/appbar.dart';
 import 'package:product_inventory/Utils/header.dart';
 import 'package:product_inventory/Utils/navbar.dart';
@@ -175,6 +177,43 @@ class _HomePageState extends State<HomePage> {
                 height: 20.0,
               ),
               NewItemsButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ViewItem(),
+                    ),
+                  );
+                },
+                text: "VIEW ITEM",
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              NewItemsButton(
+                onPressed: () async {
+                  // await FirebaseFirestore.instance
+                  //     .collection("Group")
+                  //     .doc("xd")
+                  //     .set({"name": "name"});
+                  await FirebaseFirestore.instance.collection("Group").add({
+                    "name": "GROUP NAME",
+                    "items": [],
+                  }).then((value) => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddGroup(id: value.id),
+                          ),
+                        ),
+                      });
+                },
+                text: "NEW GROUP",
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              NewItemsButton(
                 onPressed: () async {
                   // await FirebaseFirestore.instance.collection("Group").add({
                   //   "name": "GROUP NAME",
@@ -182,13 +221,12 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          AddGroup(id: "PyciMMA9Yh3zDj9LH4GP"),
+                      builder: (context) => const ViewGroup(),
                     ),
                   );
                   // });
                 },
-                text: "NEW GROUP",
+                text: "VIEW GROUP",
               ),
               const SizedBox(
                 height: 20.0,
